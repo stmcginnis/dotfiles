@@ -1,50 +1,49 @@
 return {
 	{
 		"williamboman/mason.nvim",
+        lazy = false,
 		config = function()
 			require("mason").setup()
 		end
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"bashls",
-					"dockerls",
-					"gopls",
-					"jsonls",
-					"marksman",
-					"pyre",
-					"rust_analyzer",
-					"yamlls",
-				},
-				automatic_installation = true
-			})
-		end
+        lazy = false,
+        opts = {
+            auto_install = true,
+        },
 	},
 	{
 		"neovim/nvim-lspconfig",
+        lazy = false,
 		config = function()
-			vim.api.nvim_create_autocmd('FileType', {
-				pattern = 'sh',
-				callback = function()
-					vim.lsp.start({
-						name = 'bash-language-server',
-						cmd = { 'bash-language-server', 'start' },
-					})
-				end,
-			})
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 			local lspconfig = require('lspconfig')
-			lspconfig.lua_ls.setup({})
-			lspconfig.dockerls.setup({})
-			lspconfig.gopls.setup({})
-			lspconfig.jsonls.setup({})
-			lspconfig.marksman.setup({})
-			lspconfig.pyre.setup({})
-			lspconfig.rust_analyzer.setup({})
-			lspconfig.yamlls.setup({})
+			lspconfig.lua_ls.setup({
+                capabilities = capabilities
+            })
+			lspconfig.dockerls.setup({
+                capabilities = capabilities
+            })
+			lspconfig.gopls.setup({
+                capabilities = capabilities
+            })
+			lspconfig.jsonls.setup({
+                capabilities = capabilities
+            })
+			lspconfig.marksman.setup({
+                capabilities = capabilities
+            })
+			lspconfig.pyre.setup({
+                capabilities = capabilities
+            })
+			lspconfig.rust_analyzer.setup({
+                capabilities = capabilities
+            })
+			lspconfig.yamlls.setup({
+                capabilities = capabilities
+            })
 			local opts = {}
 			vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 			vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
