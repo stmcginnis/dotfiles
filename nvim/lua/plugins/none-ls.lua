@@ -1,5 +1,9 @@
 return {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+        "nvimtools/none-ls-extras.nvim",
+        "gbprod/none-ls-shellcheck.nvim",
+    },
     config = function()
         local null_ls = require("null-ls")
 
@@ -8,8 +12,9 @@ return {
                 null_ls.builtins.formatting.stylua,
                 null_ls.builtins.formatting.prettier,
                 null_ls.builtins.formatting.codespell,
-                null_ls.builtins.diagnostics.ruff,
-                null_ls.builtins.diagnostics.shellcheck,
+                require("none-ls.diagnostics.ruff"),
+                require("none-ls-shellcheck.diagnostics"),
+                require("none-ls-shellcheck.code_actions"),
             }
         })
 
